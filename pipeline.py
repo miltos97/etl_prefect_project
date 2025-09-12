@@ -26,8 +26,13 @@ def load_task(final_df):
 @flow(name="ETL Pipeline")
 def etl_flow():
     try:
-        raw_data = extract_task()
-        transformed_data = transform_task(df=raw_data)
+        extracted_data = extract_task()
+        new_transactions = extracted_data.get("transactions")
+        if new_transactions is None or new_transactions.empty:
+            logger.info("No new transactions found. Skipping transformation and load.")
+            return
+
+        transformed_data = transform_task(df=extracted_data)
         load_task(final_df=transformed_data)
     except Exception as e:
         logger.error(f"ETL failed: {e}")
