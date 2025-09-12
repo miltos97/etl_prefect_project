@@ -1,0 +1,29 @@
+2025-09-12 11:40:28,869 - INFO - Starting extraction
+2025-09-12 11:40:28,872 - INFO - Extracting data from Excel files...
+2025-09-12 11:40:35,113 - INFO - Data extracted successfully.
+2025-09-12 11:40:35,193 - INFO - Starting transformation
+2025-09-12 11:40:35,195 - INFO - Transforation started.
+2025-09-12 11:40:35,198 - INFO - Removing duplicate rows from each dataset.
+2025-09-12 11:40:35,287 - INFO - Filling missing Age values with median.
+2025-09-12 11:40:35,293 - INFO - Customers dataset was cleaned.
+2025-09-12 11:40:35,295 - INFO - Filling missing Category values with 'N/A'.
+2025-09-12 11:40:35,297 - INFO - Products dataset was cleaned.
+2025-09-12 11:40:35,299 - INFO - Filling missing Price values and convert TransactionTime to datetime.
+2025-09-12 11:40:36,227 - INFO - Transactions dataset was cleaned.
+2025-09-12 11:40:36,229 - INFO - Merging the three datasets into one unified DataFrame.
+2025-09-12 11:40:36,308 - INFO - Merging completed.
+2025-09-12 11:40:36,310 - INFO - Fill missing values in merged dataset with 'N/A'.
+2025-09-12 11:40:36,424 - INFO - FInal dataset was cleaned.
+2025-09-12 11:40:36,424 - INFO - Transforation completed.
+2025-09-12 11:40:36,610 - INFO - Starting load
+2025-09-12 11:40:36,611 - INFO - Saving clean data...
+2025-09-12 11:40:38,268 - INFO - Data saved successfully.
+2025-09-12 11:40:38,273 - INFO - Load complete
+2025-09-12 11:45:57,822 - INFO - Starting extraction
+2025-09-12 11:45:57,824 - INFO - Extracting data from Excel files...
+2025-09-12 11:46:07,222 - INFO - Data extracted successfully.
+2025-09-12 11:46:07,294 - INFO - Starting transformation
+2025-09-12 11:46:07,295 - INFO - Transforation started.
+2025-09-12 11:46:07,296 - INFO - Removing duplicate rows from each dataset.
+2025-09-12 11:46:07,364 - INFO - Filling missing Age values with median.
+2025-09-12 11:46:07,400 - ERROR - ETL failed: name 'customers_clea' is not defined

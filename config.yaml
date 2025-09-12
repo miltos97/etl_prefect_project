@@ -1,0 +1,7 @@
+data_sources:
+  - data/Products_Data.xlsx
+  - data/Customer_Data.xlsx
+  - data/Transaction_Data.xlsx
+output_path: d1/processed_data.csv
+log_path: logs/etl.log
+incremental_column: TransactionTime
