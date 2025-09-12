@@ -23,6 +23,7 @@ etl_prefect_project
 |--- d1
 |--- data/
 |       |--- Customer_Data.xlsx
+|       |--- last_transaction_time.txt
 |       |--- Products_Data.xlsx
 |       |--- Transaction_Data.xlsx
 |
