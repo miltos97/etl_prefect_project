@@ -3,16 +3,12 @@ https://www.python.org/downloads/
 
 python --version 
 
-# Virtual Environment creation
+# Virtual Environment
 ```plaintext
-python -m venv etl_env
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-etl_env\Scripts\activate
+python -m venv etl_env   #Virtual Environment creation
+etl_env\Scripts\activate #Virtual Environment activation
+pip install requirements.txt  #requirements installation
 ```
-
-# Install Prefect
-
-pip install prefect
 
 # 1. Folder structure
 ```plaintext
@@ -35,7 +31,8 @@ etl_prefect_project
 |
 |--- config.yaml
 |--- pipeline.py
-|---README.md
+|--- README.md
+|--- requirements.txt
 ```
 # 2. Configuration File
 
