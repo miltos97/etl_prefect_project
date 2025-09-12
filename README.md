@@ -4,9 +4,11 @@ https://www.python.org/downloads/
 python --version 
 
 # Virtual Environment creation
+```plaintext
 python -m venv etl_env
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 etl_env\Scripts\activate
+```
 
 # Install Prefect
 
