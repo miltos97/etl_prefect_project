@@ -1,16 +1,22 @@
 # Install Python
+```plaintext
 https://www.python.org/downloads/
 
-python --version 
+(version 3.11.1)
+```
+
 
 # Virtual Environment
+Create a Virtual environment, then activate it and install the requirements
 ```plaintext
 python -m venv etl_env   #Virtual Environment creation
 etl_env\Scripts\activate #Virtual Environment activation
 pip install requirements.txt  #requirements installation
 ```
 
-# 1. Folder structure
+# Folder structure
+
+Download the files to your local machine
 ```plaintext
 etl_prefect_project
 |
@@ -34,33 +40,8 @@ etl_prefect_project
 |--- README.md
 |--- requirements.txt
 ```
-# 2. Configuration File
-
-In the config.yaml file are defined paths and parameters used in the pipeline.
-
-# 3. Logging Setup
-
-The custom logger utils.py writes logs to the file logs/etl.log
-
-# 4. ETL Scripts
+# Running the Pipeline
+Execute the command below in the Virtual Environment
 ```plaintext
-extract.py – The script for the data extraction
-transform.py – The script for the data transformation
-load.py – The script for the data load
-```
-# 5. Pipeline Script
-
-```plaintext
-pipeline.py – The script that calls the tasks executing the ETL scripts
-```
-
-# 6. Running the Pipeline
 python pipeline.py
-
-# 7. Log Verification
-
-Check logs/etl.log for messages like:
-```plaintext
-2025-09-12 11:45:00 - INFO - Saving clean data...
-2025-09-12 11:45:01 - INFO - Data saved successfully
 ```
