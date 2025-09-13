@@ -3,25 +3,49 @@ from etl.extract import extract_data
 from etl.transform import transform_data
 from etl.load import load_data
 from etl.utils import setup_logger
+from etl.data_product_creation import create_data_product
+from etl.data_product_creation import load_processed_data
+
 
 
 logger = setup_logger()
 
+# 1st Prefect Task - extracts the data from the source
 @task
 def extract_task():
     logger.info("Starting extraction")
     return extract_data()
 
+# 2nd Prefect Task - makes the transformations 
 @task
 def transform_task(df):
     logger.info("Starting transformation")
     return transform_data(df)
 
+# 3rd Prefect Task - loads the transformed data
 @task
 def load_task(final_df):
     logger.info("Starting load")
     load_data(final_df)
     logger.info("Load complete")
+
+# Task 1C: Data Product Creation:
+# 4th Prefect Task - loads the processed data
+@task
+def load_proc_data_task(): 
+    return load_processed_data()
+    logger.info("Loading completed.")
+
+# 5th Prefect Task - craetes and extracts the data product
+@task
+def data_product_task(processed_data):
+    logger.info("Starting data product creation")
+    create_data_product(processed_data)
+    logger.info("Data product creation complete")
+
+
+
+# Prefect flow
 
 @flow(name="ETL Pipeline")
 def etl_flow():
@@ -34,6 +58,9 @@ def etl_flow():
 
         transformed_data = transform_task(df=extracted_data)
         load_task(final_df=transformed_data)
+        
+        processed_data = load_proc_data_task()
+        data_product_task(processed_data)
     except Exception as e:
         logger.error(f"ETL failed: {e}")
         raise
