@@ -5,7 +5,7 @@ from etl.load import load_data
 from etl.utils import setup_logger
 from etl.data_product_creation import create_data_product
 from etl.data_product_creation import load_processed_data
-
+from etl.db_utils import load_to_duckdb
 
 
 logger = setup_logger()
@@ -40,9 +40,15 @@ def load_proc_data_task():
 @task
 def data_product_task(processed_data):
     logger.info("Starting data product creation")
-    create_data_product(processed_data)
+    return create_data_product(processed_data)
     logger.info("Data product creation complete")
 
+# 6th Prefect Task - Load the final dataset into duckdb
+@task
+def load_task_final(data_prod):
+    logger.info("Starting load to duckdb")
+    load_to_duckdb(data_prod)
+    logger.info("Load complete to duckdb")
 
 
 # Prefect flow
@@ -60,7 +66,9 @@ def etl_flow():
         load_task(final_df=transformed_data)
         
         processed_data = load_proc_data_task()
-        data_product_task(processed_data)
+        data_prod = data_product_task(processed_data)
+
+        load_task_final(data_prod)
     except Exception as e:
         logger.error(f"ETL failed: {e}")
         raise
