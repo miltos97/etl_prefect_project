@@ -45,10 +45,10 @@ def data_product_task(processed_data):
 
 # 6th Prefect Task - Load the final dataset into duckdb
 @task
-def load_task_final(data_prod):
+def load_task_final():
     logger.info("Starting load to duckdb")
-    load_to_duckdb(data_prod)
-    logger.info("Load complete to duckdb")
+    load_to_duckdb()
+    logger.info("Load completed to duckdb")
 
 
 # Prefect flow
@@ -66,9 +66,9 @@ def etl_flow():
         load_task(final_df=transformed_data)
         
         processed_data = load_proc_data_task()
-        data_prod = data_product_task(processed_data)
+        data_product_task(processed_data)
 
-        load_task_final(data_prod)
+        load_task_final()
     except Exception as e:
         logger.error(f"ETL failed: {e}")
         raise
