@@ -54,19 +54,26 @@ def fill_missing_values(merged):
     return merged_clean
 
 def transform_data(df):
-    logger.info("Transforation started.")
-    transactions = df["transactions"]
-    customers = df["customers"]
-    products = df["products"]
-    #Remove duplicates
-    transactions, customers, products = remove_duplicates(transactions, customers, products)
-    #Clean individual datasets
-    customers_clean = clean_customers(customers)
-    products_clean = clean_products(products)
-    transactions_clean = clean_transactions(transactions)
-    #Merge datasets
-    merged = merge_datasets(transactions_clean, customers_clean, products_clean)
-    #Fill missing values
-    final_df = fill_missing_values(merged)
-    logger.info("Transforation completed.")
-    return final_df
+    try:
+        logger.info("Transforation started.")
+        transactions = df["transactions"]
+        customers = df["customers"]
+        products = df["products"]
+        #Remove duplicates
+        transactions, customers, products = remove_duplicates(transactions, customers, products)
+        #Clean individual datasets
+        customers_clean = clean_customers(customers)
+        products_clean = clean_products(products)
+        transactions_clean = clean_transactions(transactions)
+        #Merge datasets
+        merged = merge_datasets(transactions_clean, customers_clean, products_clean)
+        #Fill missing values
+        final_df = fill_missing_values(merged)
+        logger.info("Transforation completed.")
+        return final_df
+    except Exception as e:
+        logger.error(f"Transformation failed: {e}")
+        raise
+
+        
+    

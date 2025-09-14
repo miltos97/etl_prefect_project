@@ -2,11 +2,26 @@
 import pandas as pd
 from etl.utils import setup_logger
 import os
+import yaml
 from datetime import datetime
 logger = setup_logger()
 
-# Path to store the last processed timestamp
-STATE_FILE = r'C:\Users\symeom\OneDrive - Pfizer\Desktop\SrAssociate_Data_Engineer\etl_prefect_project\data\last_transaction_time.txt'
+
+with open("config.yaml", "r") as f:
+    config = yaml.safe_load(f)
+
+try:
+    STATE_FILE = config["state_file"]   # Path to store the last processed timestamp
+    CUSTOMER_FILE = config["customer_data"]
+    PRODUCTS_FILE = config["products_data"]
+    TRANSACTIONS_FILE = config["transaction_data"]
+except KeyError as e:
+    logger.error(f"Missing key in config.yaml: {e}")
+    raise
+
+
+
+
 
 def get_last_transaction_time():
     if os.path.exists(STATE_FILE):
@@ -19,14 +34,14 @@ def update_last_transaction_time(latest_time):
         f.write(latest_time.strftime('%Y-%m-%d %H:%M:%S'))
 
 def extract_data():
-    logger.info("Extracting data from Excel files...")
+    logger.info("Extracting data from the source...")
 
     # Load full datasets
-    customers = pd.read_excel(r'C:\Users\symeom\OneDrive - Pfizer\Desktop\SrAssociate_Data_Engineer\etl_prefect_project\data\Customer_Data.xlsx')
-    products = pd.read_excel(r'C:\Users\symeom\OneDrive - Pfizer\Desktop\SrAssociate_Data_Engineer\etl_prefect_project\data\Products_Data.xlsx')
+    customers = pd.read_excel(CUSTOMER_FILE)
+    products = pd.read_excel(PRODUCTS_FILE)
 
     # Load transactions and filter by timestamp
-    transactions_full = pd.read_excel(r'C:\Users\symeom\OneDrive - Pfizer\Desktop\SrAssociate_Data_Engineer\etl_prefect_project\data\Transaction_Data.xlsx')
+    transactions_full = pd.read_excel(TRANSACTIONS_FILE)
     transactions_full['TransactionTime'] = pd.to_datetime(transactions_full['TransactionTime'])
 
     last_time = get_last_transaction_time()

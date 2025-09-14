@@ -5,11 +5,23 @@ logger = setup_logger()
 
 # load processed data
 def load_processed_data():
-    logger.info("Loading processed data...")
-    processed_data = pd.read_csv(r'C:\Users\symeom\OneDrive - Pfizer\Desktop\SrAssociate_Data_Engineer\etl_prefect_project\d1\processed_data.csv')
-    return processed_data
-
-
+    try:
+        logger.info("Loading processed data for Data Product creation...")
+        with open("config.yaml") as f:
+            config = yaml.safe_load(f)
+        input_path = config["output_path"]
+        processed_data = pd.read_csv(input_path)
+        logger.info("Loading completed, Data Product creation starts...")
+        return processed_data
+    except FileNotFoundError as e:
+        logger.error(f"File not found: {e}")
+        raise
+    except yaml.YAMLError as e:
+        logger.error(f"Error parsing YAML config: {e}")
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected error loading processed data: {e}")
+        raise
 
 
 # Aggregated metrics
@@ -73,23 +85,28 @@ def data_prod(merged_df):
 
 # Export to CSV
 def save_to_csv(analytical_ready): 
-    logger.info("Saving final data...")
+    logger.info("Saving Data Product...")
     with open("config.yaml") as f:
         config = yaml.safe_load(f)
     output_path = config["output_path_fin"]
     analytical_ready.to_csv(output_path, index=False)
     logger.info("Data saved successfully.")
+    return analytical_ready
 
 
 def create_data_product(processed_data):
-    #processed_data = load_processed_data()
-    aggregated = aggr_data(processed_data)
-    customer_info = get_customer_info(processed_data)
-    product_pref = get_prod_pref(processed_data)
-    merged_df = merge_data(aggregated,customer_info,product_pref)
-    analytical_ready = data_prod(merged_df)
-    save_to_csv(analytical_ready)
-    return create_data_product
+    try:
+        aggregated = aggr_data(processed_data)
+        customer_info = get_customer_info(processed_data)
+        product_pref = get_prod_pref(processed_data)
+        merged_df = merge_data(aggregated,customer_info,product_pref)
+        analytical_ready = data_prod(merged_df)
+        save_to_csv(analytical_ready)
+        return create_data_product
+    except Exception as e:
+        logger.error(f"Data product creation failed: {e}")
+        raise
+
 
 
 
