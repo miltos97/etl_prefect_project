@@ -1,7 +1,9 @@
-data_sources:
-  - data/Products_Data.xlsx
-  - data/Customer_Data.xlsx
-  - data/Transaction_Data.xlsx
-output_path: d1/processed_data.csv
-log_path: logs/etl.log
 incremental_column: TransactionTime
+state_file: "C:/Users/symeom/OneDrive - Pfizer/Desktop/SrAssociate_Data_Engineer/etl_prefect_project/state_file/last_transaction_time.txt"
+customer_data: "C:/Users/symeom/OneDrive - Pfizer/Desktop/SrAssociate_Data_Engineer/etl_prefect_project/data/Customer_Data.xlsx"
+products_data: "C:/Users/symeom/OneDrive - Pfizer/Desktop/SrAssociate_Data_Engineer/etl_prefect_project/data/Products_Data.xlsx"
+transaction_data: "C:/Users/symeom/OneDrive - Pfizer/Desktop/SrAssociate_Data_Engineer/etl_prefect_project/data/Transaction_Data.xlsx"
+output_path: d1/processed_data.csv
+output_path_fin: d2/Aanalytical_Ready_Data.csv
+log_path: logs/etl.log
+db_path: C:\Users\symeom\OneDrive - Pfizer\Desktop\Duck_db\mydb.duckdb
