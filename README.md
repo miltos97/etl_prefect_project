@@ -59,7 +59,7 @@ Then click on the "Test connection" button and if everything is ok click "OK".
 
 
 ## 5. Update the config.yaml file
-Update the paths below with the coresponding path of you pc.
+Update the paths below with the coresponding path of your pc.
 ```plaintext
 incremental_column: TransactionTime
 state_file: "C:/........./etl_prefect_project/state_file/last_transaction_time.txt"
@@ -98,7 +98,6 @@ etl_prefect_project
 |
 |--- data/                               #data source or d0
 |       |--- Customer_Data.xlsx
-|       |--- last_transaction_time.txt
 |       |--- Products_Data.xlsx
 |       |--- Transaction_Data.xlsx
 |
